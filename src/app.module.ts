@@ -8,11 +8,11 @@ import { AppService } from './app.service';
 
 import { User } from './users/entities/user.entity';
 import { Room } from './rooms/entities/room.entity';
-import { Game } from './games/entities/game.entity';
+import { UserRoom } from './user-rooms/entities/user-room.entity';
 
 import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
-import { GamesModule } from './games/games.module';
+import { UserRoomsModule } from './user-rooms/user-rooms.module';
 
 @Module({
   imports: [
@@ -24,12 +24,12 @@ import { GamesModule } from './games/games.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, Room, Game],
+      entities: [User, Room, UserRoom],
       synchronize: process.env.SYNCDB ? true : false,
     }),
     UsersModule,
     RoomsModule,
-    GamesModule,
+    UserRoomsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

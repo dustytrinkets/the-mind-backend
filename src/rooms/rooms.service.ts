@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { Room } from './entities/room.entity';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
+import Str from '@supercharge/strings';
 
 @Injectable()
 export class RoomsService {
@@ -13,7 +14,16 @@ export class RoomsService {
     private roomsRepository: Repository<Room>,
   ) {}
   create(createRoomDto: CreateRoomDto) {
-    return this.roomsRepository.create(createRoomDto);
+    try {
+      return this.roomsRepository.save({
+        created_at: new Date(),
+        code: Str.random(6).toUpperCase(),
+        ...createRoomDto,
+      });
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
   }
 
   findAll(): Promise<Room[]> {

@@ -13,7 +13,15 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
   create(createUserDto: CreateUserDto) {
-    return this.usersRepository.create(createUserDto);
+    try {
+      return this.usersRepository.save({
+        created_at: new Date(),
+        ...createUserDto,
+      });
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
   }
 
   async findAll(): Promise<User[]> {

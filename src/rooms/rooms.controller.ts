@@ -17,7 +17,8 @@ export class RoomsController {
 
   @Post()
   create(@Body() createRoomDto: CreateRoomDto) {
-    return this.roomsService.create(createRoomDto);
+    const room = this.roomsService.create(createRoomDto);
+    return room;
   }
 
   @Get()

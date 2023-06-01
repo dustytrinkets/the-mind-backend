@@ -17,7 +17,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "infra:start": "brew services start postgresql",
+    "infra:stop": "brew services stop postgresql"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -25,7 +27,10 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/platform-socket.io": "^9.4.2",
     "@nestjs/typeorm": "^9.0.1",
+    "@nestjs/websockets": "^9.4.2",
+    "@supercharge/strings": "^2.0.0",
     "mysql2": "^3.3.1",
     "pg": "^8.11.0",
     "reflect-metadata": "^0.1.13",
