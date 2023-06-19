@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  ManyToMany,
+  CreateDateColumn,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 
 @Entity()
@@ -10,8 +17,11 @@ export class Room {
   code: string;
 
   @ManyToOne(() => User, (user: User) => user.id)
-  creator: string;
+  creator: User;
 
-  @Column()
+  @CreateDateColumn()
   created_at: Date;
+
+  @ManyToMany(() => User, (user: User) => user.rooms)
+  users: User[];
 }

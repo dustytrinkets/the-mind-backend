@@ -15,6 +15,7 @@ export class RoomsService {
   ) {}
   create(createRoomDto: CreateRoomDto) {
     try {
+      console.log('Creating room', createRoomDto);
       return this.roomsRepository.save({
         created_at: new Date(),
         code: Str.random(6).toUpperCase(),
@@ -32,6 +33,14 @@ export class RoomsService {
 
   findOne(id: number): Promise<Room | null> {
     return this.roomsRepository.findOneBy({ id });
+  }
+
+  findOneByRoomCode(code: string): Promise<Room | null> {
+    return this.roomsRepository.findOne({
+      where: {
+        code: code,
+      },
+    });
   }
 
   update(id: number, updateRoomDto: UpdateRoomDto) {

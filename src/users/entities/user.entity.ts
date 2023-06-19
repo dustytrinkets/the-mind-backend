@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  CreateDateColumn,
+} from 'typeorm';
+import { Room } from '../../rooms/entities/room.entity';
 
 @Entity()
 export class User {
@@ -8,6 +15,9 @@ export class User {
   @Column()
   name: string;
 
-  @Column()
+  @CreateDateColumn()
   created_at: Date;
+
+  @ManyToMany(() => Room, (room: Room) => room.users)
+  rooms: Room[];
 }
