@@ -1,15 +1,6 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { RoomUsersService } from './room-users.service';
 import { CreateRoomUserDto } from './dto/create-room-user.dto';
-import { UpdateRoomUserDto } from './dto/update-room-user.dto';
 import { Logger } from '@nestjs/common';
 
 const loggerContext = 'RoomUsersController';
@@ -38,19 +29,6 @@ export class RoomUsersController {
       return null;
     }
     return users;
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.roomUsersService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateRoomUserDto: UpdateRoomUserDto,
-  ) {
-    return this.roomUsersService.update(+id, updateRoomUserDto);
   }
 
   @Delete(':id')

@@ -13,6 +13,8 @@ import { RoomUser } from './room-users/entities/room-user.entity';
 import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { RoomUsersModule } from './room-users/room-users.module';
+import { RoomsGateway } from './rooms/rooms.gateway';
+import { RoomUsersGateway } from './room-users/room-users.gateway';
 
 @Module({
   imports: [
@@ -32,7 +34,7 @@ import { RoomUsersModule } from './room-users/room-users.module';
     RoomUsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, RoomsGateway, RoomUsersGateway],
 })
 export class AppModule {
   constructor(private dataSource: DataSource) {}

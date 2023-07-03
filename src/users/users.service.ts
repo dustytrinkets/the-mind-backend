@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -28,6 +28,12 @@ export class UsersService {
     const users = await this.usersRepository.find();
     console.log(users);
     return users;
+  }
+
+  async findUsersByIds(users: Array<number>): Promise<User[] | null> {
+    return this.usersRepository.findBy({
+      id: In(users),
+    });
   }
 
   findOne(id: number): Promise<User | null> {
