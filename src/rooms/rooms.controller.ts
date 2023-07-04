@@ -33,6 +33,11 @@ export class RoomsController {
     return this.roomsService.findOne(+id);
   }
 
+  @Get('/creator/:id')
+  findCreator(@Param('id') id: string) {
+    return this.roomsService.findCreator(+id);
+  }
+
   @Get('/code/:code')
   async findOneByRoomCode(@Param('code') code: string) {
     Logger.log(`Retrieving room with code ${code}`, loggerContext);

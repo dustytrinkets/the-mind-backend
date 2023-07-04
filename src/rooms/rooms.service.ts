@@ -35,6 +35,16 @@ export class RoomsService {
     return this.roomsRepository.findOneBy({ id });
   }
 
+  async findCreator(id: number): Promise<any | null> {
+    const response = await this.roomsRepository
+      .createQueryBuilder('room')
+      .leftJoinAndSelect('room.creator', 'user')
+      .where('room.id = :id', { id })
+      .getOne();
+    const creator = response.creator;
+    return creator;
+  }
+
   findOneByRoomCode(code: string): Promise<Room | null> {
     return this.roomsRepository.findOne({
       where: {
