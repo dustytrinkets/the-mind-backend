@@ -9,12 +9,13 @@ import { AppService } from './app.service';
 import { User } from './users/entities/user.entity';
 import { Room } from './rooms/entities/room.entity';
 import { RoomUser } from './room-users/entities/room-user.entity';
+import { Game } from './games/entities/game.entity';
 
 import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { RoomUsersModule } from './room-users/room-users.module';
-// import { RoomsGateway } from './rooms/rooms.gateway';
 import { RoomUsersGateway } from './room-users/room-users.gateway';
+import { GamesModule } from './games/games.module';
 
 @Module({
   imports: [
@@ -26,12 +27,13 @@ import { RoomUsersGateway } from './room-users/room-users.gateway';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, Room, RoomUser],
+      entities: [Game, User, Room, RoomUser],
       synchronize: process.env.SYNCDB ? true : false,
     }),
     UsersModule,
     RoomsModule,
     RoomUsersModule,
+    GamesModule,
   ],
   controllers: [AppController],
   providers: [AppService, RoomUsersGateway],

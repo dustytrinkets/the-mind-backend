@@ -3,9 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { RoomUser } from './entities/room-user.entity';
-import { User } from 'src/users/entities/user.entity';
 import { CreateRoomUserDto } from './dto/create-room-user.dto';
-import { UpdateRoomUserDto } from './dto/update-room-user.dto';
 
 @Injectable()
 export class RoomUsersService {
@@ -30,6 +28,7 @@ export class RoomUsersService {
     return `This action returns all roomUsers`;
   }
 
+  // TODO revisar esta query del copon
   async findUsersByRoomId(roomId: number): Promise<any> {
     const response = await this.roomUsersRepository
       .createQueryBuilder('room_user')

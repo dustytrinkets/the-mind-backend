@@ -44,7 +44,7 @@ export class RoomsController {
     const room = await this.roomsService.findOneByRoomCode(code);
     Logger.log(`Retrieved room: ${JSON.stringify(room)}`, loggerContext);
     if (!room) {
-      Logger.log('Room not found: ', code);
+      Logger.log(`Room not found: ${code}`, loggerContext);
       return null;
     }
     return room;
