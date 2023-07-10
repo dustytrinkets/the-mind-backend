@@ -41,16 +41,30 @@ export class GamesService {
     }
   }
 
+  //update status by id
+  async updateStatus(id: number, updateGameDto: UpdateGameDto) {
+    try {
+      console.log('Updating game status', id, updateGameDto);
+      const game = await this.gamesRepository.findOne({
+        where: { id },
+      });
+      console.log('Found game', game);
+      return this.gamesRepository.save({
+        ...game,
+        ...updateGameDto,
+      });
+    } catch (error) {
+      console.log('Error updating game status: ', error);
+      return error;
+    }
+  }
+
   findAll() {
     return `This action returns all games`;
   }
 
   findOne(id: number) {
     return `This action returns a #${id} game`;
-  }
-
-  update(id: number, updateGameDto: UpdateGameDto) {
-    return `This action updates a #${id} game`;
   }
 
   remove(id: number) {

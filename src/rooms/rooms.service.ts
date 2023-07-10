@@ -19,6 +19,7 @@ export class RoomsService {
       return this.roomsRepository.save({
         created_at: new Date(),
         code: Str.random(6).toUpperCase(),
+        status: 'created',
         ...createRoomDto,
       });
     } catch (error) {
@@ -53,8 +54,21 @@ export class RoomsService {
     });
   }
 
-  update(id: number, updateRoomDto: UpdateRoomDto) {
-    return this.roomsRepository.update(id, updateRoomDto);
+  async updateStatus(id: number, updateRoomDto: UpdateRoomDto) {
+    try {
+      console.log('Updating room status', id, updateRoomDto);
+      const room = await this.roomsRepository.findOne({
+        where: { id },
+      });
+      console.log('Found room', room);
+      return this.roomsRepository.save({
+        ...room,
+        ...updateRoomDto,
+      });
+    } catch (error) {
+      console.log('Error updating room status: ', error);
+      return error;
+    }
   }
 
   remove(id: number) {

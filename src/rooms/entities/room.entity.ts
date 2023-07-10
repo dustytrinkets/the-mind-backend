@@ -24,4 +24,7 @@ export class Room {
 
   @ManyToMany(() => User, (user: User) => user.rooms)
   users: User[];
+
+  @Column()
+  status: string;
 }

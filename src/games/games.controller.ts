@@ -48,8 +48,8 @@ export class GamesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGameDto: UpdateGameDto) {
-    return this.gamesService.update(+id, updateGameDto);
+  updateStatus(@Param('id') id: string, @Body() updateGameDto: UpdateGameDto) {
+    return this.gamesService.updateStatus(+id, updateGameDto);
   }
 
   @Delete(':id')
