@@ -13,8 +13,10 @@ export class GamesGateway {
   @WebSocketServer()
   server;
   @SubscribeMessage('startgame')
-  handleMessage(@MessageBody() game: number): void {
-    Logger.log(`Game started: ${game}`, loggerContext);
-    this.server.emit('startgame', game);
+  handleMessage(
+    @MessageBody() game: { roomCode; id: number; numbers: number[] },
+  ): void {
+    Logger.log(`Game started: ${game.id} ${game.numbers}`, loggerContext);
+    this.server.to(game.roomCode).emit('startgame', game);
   }
 }

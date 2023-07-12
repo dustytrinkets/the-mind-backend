@@ -13,7 +13,7 @@ export class Game {
   id: number;
 
   @ManyToOne(() => Room, (room: Room) => room.id)
-  roomId: number;
+  room: Room;
 
   @Column()
   status: string;

@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -7,6 +8,8 @@ import { CreateRoomDto } from './dto/create-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
 import Str from '@supercharge/strings';
 
+const loggerContext = 'RoomsService';
+
 @Injectable()
 export class RoomsService {
   constructor(
@@ -15,7 +18,7 @@ export class RoomsService {
   ) {}
   create(createRoomDto: CreateRoomDto) {
     try {
-      console.log('Creating room', createRoomDto);
+      Logger.log('Creating room', loggerContext);
       return this.roomsRepository.save({
         created_at: new Date(),
         code: Str.random(6).toUpperCase(),
@@ -23,7 +26,7 @@ export class RoomsService {
         ...createRoomDto,
       });
     } catch (error) {
-      console.log(error);
+      Logger.error('Error creating room: ', error, loggerContext);
       return error;
     }
   }
@@ -56,17 +59,17 @@ export class RoomsService {
 
   async updateStatus(id: number, updateRoomDto: UpdateRoomDto) {
     try {
-      console.log('Updating room status', id, updateRoomDto);
+      Logger.log('Updating room status', loggerContext);
       const room = await this.roomsRepository.findOne({
         where: { id },
       });
-      console.log('Found room', room);
+      Logger.log('Found room', loggerContext);
       return this.roomsRepository.save({
         ...room,
         ...updateRoomDto,
       });
     } catch (error) {
-      console.log('Error updating room status: ', error);
+      Logger.error('Error updating room status: ', error, loggerContext);
       return error;
     }
   }

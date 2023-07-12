@@ -27,16 +27,16 @@ export class GamesService {
   }
 
   //find where room id = room id and status = created
-  async findCreatedGameByRoomId(roomId: number) {
+  async findActiveGameByRoomId(roomId: number) {
     try {
-      console.log('Finding created game by room id', roomId);
+      console.log('Finding active game by room id', roomId);
       const game = await this.gamesRepository.findOne({
-        where: { roomId, status: 'created' },
+        where: { room: { id: roomId } },
       });
-      console.log('Found created game', game);
+      console.log('Found active game', game);
       return game;
     } catch (error) {
-      console.log('Error finding created game: ', error);
+      console.log('Error finding active game: ', error);
       return error;
     }
   }

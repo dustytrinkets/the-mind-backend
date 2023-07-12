@@ -13,13 +13,14 @@ export class RoomUsersGateway {
   @WebSocketServer()
   server;
   @SubscribeMessage('roomuser')
-  handleMessage(@MessageBody() message: string): void {
-    Logger.log(`A user entered: ${message}`, loggerContext);
-    this.server.emit('roomuser', message);
+  handleMessage(@MessageBody() message): void {
+    Logger.log(`A user entered: ${message.name}`, loggerContext);
+    this.server.socketsJoin(message.roomCode);
+    this.server.to(message.roomCode).emit('roomuser', message);
   }
   // @SubscribeMessage('user_leave')
-  // handleUserLeave(@MessageBody() message: string, client): void {
+  // handleUserLeave(@MessageBody() message): void {
   //   Logger.log(`user_leave id: ${message}`, loggerContext);
-  //   this.server.emit('user_leave', message);
+  //   this.server.to(message.roomCode).emit('user_leave', message);
   // }
 }

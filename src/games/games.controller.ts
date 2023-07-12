@@ -12,6 +12,8 @@ import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { Logger } from '@nestjs/common';
 
+import { generateGameNumbers } from './utils/generateGameNumbers';
+
 const loggerContext = 'GamesController';
 
 @Controller('games')
@@ -24,16 +26,18 @@ export class GamesController {
       `Creating game: ${JSON.stringify(createGameDto)}`,
       loggerContext,
     );
+    const numbers = generateGameNumbers(createGameDto.numPlayers);
     const game = await this.gamesService.create(createGameDto);
     Logger.log(`Game created: ${JSON.stringify(game)}`, loggerContext);
-    return game;
+    // TODO: save numbers to DB
+    return { ...game, numbers };
   }
 
-  @Get('/created/:roomId')
+  @Get('/active/:roomId')
   async findCreatedGameByRoomId(@Param('roomId') roomId: number) {
-    Logger.log(`Finding created game by room id: ${roomId}`, loggerContext);
-    const game = await this.gamesService.findCreatedGameByRoomId(roomId);
-    Logger.log(`Found created game: ${JSON.stringify(game)}`, loggerContext);
+    Logger.log(`Finding active game by room id: ${roomId}`, loggerContext);
+    const game = await this.gamesService.findActiveGameByRoomId(roomId);
+    Logger.log(`Found active game: ${JSON.stringify(game)}`, loggerContext);
     return game;
   }
 
