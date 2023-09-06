@@ -19,6 +19,11 @@ export class ParticipationsGateway {
       loggerContext,
     );
     this.server.socketsJoin(message.roomCode);
-    this.server.to(message.roomCode).emit('sendnumber', message);
+    this.server.to(message.roomCode).emit('sendnumber', {
+      numberSent: message.userRandomNumber,
+      roomIdSent: message.roomId,
+      userIdSent: message.userId,
+      userNameSent: message.userName,
+    });
   }
 }

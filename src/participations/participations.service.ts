@@ -75,7 +75,6 @@ export class ParticipationsService {
         .where('user_id = :user_id', {
           user_id: updateParticipationDto.user_id,
         })
-
         .andWhere('game_id = :game_id', {
           game_id: updateParticipationDto.game_id,
         })
