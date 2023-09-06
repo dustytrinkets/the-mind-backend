@@ -14,9 +14,19 @@ export class GamesGateway {
   server;
   @SubscribeMessage('startgame')
   handleMessage(
-    @MessageBody() game: { roomCode; id: number; numbers: number[] },
+    @MessageBody()
+    game: {
+      roomId: number;
+      roomCode: string;
+      id: number;
+      numbers: number[];
+    },
   ): void {
-    Logger.log(`Game started: ${game.id} ${game.numbers}`, loggerContext);
+    Logger.log(
+      `Game started: Game id: ${game.id}. Numbers: ${game.numbers}`,
+      loggerContext,
+    );
+    this.server.socketsJoin(game.roomCode);
     this.server.to(game.roomCode).emit('startgame', game);
   }
 }

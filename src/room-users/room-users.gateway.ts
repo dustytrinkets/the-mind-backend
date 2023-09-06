@@ -14,7 +14,7 @@ export class RoomUsersGateway {
   server;
   @SubscribeMessage('roomuser')
   handleMessage(@MessageBody() message): void {
-    Logger.log(`A user entered: ${message.name}`, loggerContext);
+    Logger.log(`A user entered: ${JSON.stringify(message)}`, loggerContext);
     this.server.socketsJoin(message.roomCode);
     this.server.to(message.roomCode).emit('roomuser', message);
   }

@@ -13,12 +13,16 @@ import { UpdateGameDto } from './dto/update-game.dto';
 import { Logger } from '@nestjs/common';
 
 import { generateGameNumbers } from './utils/generateGameNumbers';
+import { ParticipationsService } from 'src/participations/participations.service';
 
 const loggerContext = 'GamesController';
 
 @Controller('games')
 export class GamesController {
-  constructor(private readonly gamesService: GamesService) {}
+  constructor(
+    private readonly gamesService: GamesService,
+    private readonly participationsService: ParticipationsService,
+  ) {}
 
   @Post()
   async create(@Body() createGameDto: CreateGameDto) {
@@ -27,9 +31,17 @@ export class GamesController {
       loggerContext,
     );
     const numbers = generateGameNumbers(createGameDto.numPlayers);
+    Logger.log(`Numbers created: ${JSON.stringify(numbers)}`, loggerContext);
     const game = await this.gamesService.create(createGameDto);
     Logger.log(`Game created: ${JSON.stringify(game)}`, loggerContext);
-    // TODO: save numbers to DB
+    // todo: maybe this should be called by the front end ? not sure
+    createGameDto.players.forEach((playerId, i) => {
+      this.participationsService.create({
+        game: game.id,
+        user: playerId,
+        number: numbers[i],
+      });
+    });
     return { ...game, numbers };
   }
 

@@ -28,6 +28,6 @@ export class Participation {
   @Column()
   number: number;
 
-  @Column()
+  @Column({ nullable: true })
   order: number;
 }

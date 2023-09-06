@@ -1,9 +1,9 @@
 import {
   Controller,
   Get,
+  Put,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
 } from '@nestjs/common';
@@ -19,23 +19,30 @@ export class ParticipationsController {
   create(@Body() createParticipationDto: CreateParticipationDto) {
     return this.participationsService.create(createParticipationDto);
   }
+  @Put()
+  createParticipation(@Body() updateParticipationDto: UpdateParticipationDto) {
+    return this.participationsService.update(updateParticipationDto);
+  }
 
   @Get()
   findAll() {
     return this.participationsService.findAll();
   }
 
+  @Get('/:gameId/:userId')
+  getParticipationByUserIdAndGameId(
+    @Param('gameId') gameId: number,
+    @Param('userId') userId: number,
+  ) {
+    return this.participationsService.getParticipationByUserIdAndGameId(
+      gameId,
+      userId,
+    );
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.participationsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateParticipationDto: UpdateParticipationDto,
-  ) {
-    return this.participationsService.update(+id, updateParticipationDto);
   }
 
   @Delete(':id')
