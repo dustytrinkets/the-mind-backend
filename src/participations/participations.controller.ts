@@ -41,8 +41,8 @@ export class ParticipationsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.participationsService.findOne(+id);
+  findNumbersByGameId(@Param('id') id: string) {
+    return this.participationsService.findNumbersByGameId(+id);
   }
 
   @Delete(':id')

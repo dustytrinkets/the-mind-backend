@@ -43,7 +43,6 @@ export class GamesGateway {
     this.server.socketsJoin(game.roomCode);
     this.server.to(game.roomCode).emit('lose', {
       roomIdSent: game.roomId,
-      gameIdSent: game.id,
     });
   }
 
@@ -60,7 +59,6 @@ export class GamesGateway {
     this.server.socketsJoin(game.roomCode);
     this.server.to(game.roomCode).emit('win', {
       roomIdSent: game.roomId,
-      gameIdSent: game.id,
     });
   }
 }

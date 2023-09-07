@@ -55,8 +55,17 @@ export class ParticipationsService {
     return `This action returns all participations`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} participation`;
+  findNumbersByGameId(id: number) {
+    try {
+      Logger.log(`Getting participation by game id ${id}`, loggerContext);
+      return this.participationsRepository.find({
+        where: { game: { id } },
+        relations: ['user'],
+      });
+    } catch (error) {
+      console.log('Error getting participation by game id: ', error);
+      return error;
+    }
   }
 
   update(updateParticipationDto: UpdateParticipationDto) {
