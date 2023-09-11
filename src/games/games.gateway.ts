@@ -19,13 +19,9 @@ export class GamesGateway {
       roomId: number;
       roomCode: string;
       id: number;
-      numbers: number[];
     },
   ): void {
-    Logger.log(
-      `Game started: Game id: ${game.id}. Numbers: ${game.numbers}`,
-      loggerContext,
-    );
+    Logger.log(`Game started: Game id: ${game.id}`, loggerContext);
     this.server.socketsJoin(game.roomCode);
     this.server.to(game.roomCode).emit('startgame', game);
   }
