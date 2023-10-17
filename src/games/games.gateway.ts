@@ -23,7 +23,11 @@ export class GamesGateway {
   ): void {
     Logger.log(`Game started: Game id: ${game.id}`, loggerContext);
     this.server.socketsJoin(game.roomCode);
-    this.server.to(game.roomCode).emit('startgame', game);
+    this.server.to(game.roomCode).emit('startgame', {
+      roomIdSent: game.roomId,
+      roomCodeSent: game.roomCode,
+      gameIdSent: game.id,
+    });
   }
 
   @SubscribeMessage('lose')
@@ -55,6 +59,38 @@ export class GamesGateway {
     this.server.socketsJoin(game.roomCode);
     this.server.to(game.roomCode).emit('win', {
       roomIdSent: game.roomId,
+    });
+  }
+
+  @SubscribeMessage('backtoroom')
+  handleBackToRoom(
+    @MessageBody()
+    game: {
+      roomId: number;
+      roomCode: string;
+    },
+  ): void {
+    Logger.log(`Back to room ${game.roomCode}`, loggerContext);
+    this.server.socketsJoin(game.roomCode);
+    this.server.to(game.roomCode).emit('backtoroom', {
+      roomIdSent: game.roomId,
+    });
+  }
+
+  @SubscribeMessage('playagain')
+  handlePlayAgain(
+    @MessageBody()
+    game: {
+      roomId: number;
+      roomCode: string;
+      newGameId: number;
+    },
+  ): void {
+    Logger.log(`Play again for room ${game.roomCode}`, loggerContext);
+    this.server.socketsJoin(game.roomCode);
+    this.server.to(game.roomCode).emit('playagain', {
+      roomIdSent: game.roomId,
+      newGameIdSent: game.newGameId,
     });
   }
 }
