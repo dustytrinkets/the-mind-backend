@@ -37,11 +37,14 @@ export class ParticipationsService {
         `Getting participation by user id ${userId}, and game id ${gameId}`,
         loggerContext,
       );
-      const x = await this.participationsRepository.findOne({
+      const participation = await this.participationsRepository.findOne({
         where: { user: { id: userId }, game: { id: gameId } },
       });
-      Logger.log(`Found participation, ${JSON.stringify(x)}`, loggerContext);
-      return x;
+      Logger.log(
+        `Found participation, ${JSON.stringify(participation)}`,
+        loggerContext,
+      );
+      return participation;
     } catch (error) {
       console.log(
         'Error getting participation by user id and game id: ',

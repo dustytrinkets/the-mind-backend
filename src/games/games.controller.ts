@@ -34,7 +34,6 @@ export class GamesController {
     Logger.log(`Numbers created: ${JSON.stringify(numbers)}`, loggerContext);
     const game = await this.gamesService.create(createGameDto);
     Logger.log(`Game created: ${JSON.stringify(game)}`, loggerContext);
-    // todo: maybe this should be called by the front end ? not sure
     createGameDto.players.forEach((playerId, i) => {
       this.participationsService.create({
         game: game.id,

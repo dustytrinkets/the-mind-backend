@@ -5,13 +5,14 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { Server } from 'socket.io';
 
 const loggerContext = 'GamesGateway';
 
 @WebSocketGateway(8001, { cors: '*' })
 export class GamesGateway {
   @WebSocketServer()
-  server;
+  server: Server;
   @SubscribeMessage('startgame')
   handleMessage(
     @MessageBody()

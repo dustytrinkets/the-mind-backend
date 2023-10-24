@@ -5,13 +5,14 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { Server } from 'socket.io';
 
 const loggerContext = 'RoomUsersGateway';
 
 @WebSocketGateway(8001, { cors: '*' })
 export class RoomUsersGateway {
   @WebSocketServer()
-  server;
+  server: Server;
   @SubscribeMessage('roomuser')
   handleMessage(@MessageBody() message): void {
     Logger.log(`A user entered: ${JSON.stringify(message)}`, loggerContext);
